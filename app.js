@@ -1,5 +1,7 @@
 const form = document.getElementById('useForm');
 
+const apiURL = 'http://localhost:8080/users';
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -14,7 +16,7 @@ form.addEventListener('submit', async (e) => {
             },
             body: jsonData,
         });
-    
+
         if (!response.ok) {
             throw new Error("Sem internet ou problema na rede");
         }
@@ -29,3 +31,20 @@ form.addEventListener('submit', async (e) => {
     }
 
 });
+
+
+async function listar() {
+    const lista = document.getElementById('lista');
+
+    const result = await fetch(apiURL);
+    const data = await result.json();
+
+    for (user of data) {
+        const li = document.createElement('li');
+        li.innerHTML += user;
+    }    
+
+    lista.innerHTML = li;
+
+
+}
